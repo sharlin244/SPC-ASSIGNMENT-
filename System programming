@@ -1,0 +1,96 @@
+
+# Prompt the user to enter employee name, hours worked, and rate per hour
+read -p "Enter employee name: " name
+read -p "Enter hours worked: " hours_worked
+read -p "Enter rate per hour: " rate_per_hour
+# Calculate basic pay
+basic_pay=$((hours_worked * rate_per_hour))
+# Calculate tax
+if [ $basic_pay -gt 70000 ]; then
+    tax=$((basic_pay * 25 / 100))
+elseif [ $basic_pay -ge 15000 ]; then
+    tax=$((basic_pay * 15 / 100))
+else
+    tax=0 
+# Calculate net pay
+net_pay=$((basic_pay - tax))
+# Display the results
+echo "Employee name: $name"
+echo "Basic pay: $basic_pay"
+echo "Tax: $tax"
+echo "Net pay: $net_pay"
+QUESTION 2
+#include <stdio.h>      // Standard input/output functions
+#include <stdlib.h>     // Standard library functions
+#include <fcntl.h>      // File control options
+#include <unistd.h>     // Symbolic constants and types for POSIX operating systems
+
+int main() {
+    int file_descriptor;    // File descriptor for the opened file
+    char buffer[100];       // Buffer to store read content
+    
+    // Open a file named "example.txt" for writing only, creating it if it doesn't exist, and truncate it to 0 length
+    // 0644 specifies read/write permissions for owner, read-only for group and others
+    file_descriptor = open("example.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    
+    if (file_descriptor == -1) {
+        perror("Error opening the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Write "Hello, world!" to the file
+    if (write(file_descriptor, "Hello, world!", 13) == -1) {
+        perror("Error writing to the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Close the file
+    close(file_descriptor);
+    
+    // Open the file again for reading only
+    file_descriptor = open("example.txt", O_RDONLY);
+    
+    if (file_descriptor == -1) {
+        perror("Error opening the file for reading");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Read the content of the file into the buffer
+    if (read(file_descriptor, buffer, 100) == -1) {
+        perror("Error reading from the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Close the file
+    close(file_descriptor);
+    
+    // Print the content read from the file
+    printf("Content read from the file: %s\n", buffer);
+    
+    return 0;
+}
+QUESTION 3
+# Prompt the user to enter customer ID, customer name, and units consumed
+read -p "Enter customer ID: " customer_id
+read -p "Enter customer name: " customer_name
+read -p "Enter units consumed: " units_consumed 
+# Initialize variables for charges per unit and surcharges
+charge_per_unit=0
+surcharge=0
+# Calculate charges based on units consumed
+if [ $units_consumed -lt 200 ]; then
+    charge_per_unit=120
+elseif [ $units_consumed -ge 200 ] && [ $units_consumed -lt 400 ]; then
+    charge_per_unit=150
+elseif [ $units_consumed -ge 400 ] && [ $units_consumed -lt 600 ]; then
+    charge_per_unit=180
+else
+    charge_per_unit=200
+# Calculate total bill
+total_bill=$((units_consumed * charge_per_unit))
+# Display the results
+echo "Customer ID: $customer_id"
+echo "Customer Name: $customer_name"
+echo "Units Consumed: $units_consumed"
+echo "Charges per unit: Ksh $charge_per_unit"
+echo "Total Bill: Ksh $total_bill"
